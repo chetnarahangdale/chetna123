@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>All Course</h1>
+    <button onclick="getcourse()">show Course</button>
+
+    <ul id="list"></ul>
+
+    <script>
+    
+    async function getcourse(){
+
+        let res = await fetch("http://localhost:3000/getcourse");
+        let data = await
+
+        res.json()
+
+        let list = " "
+
+        data.forEach(element=>{
+            list += `<li> ${element.course}</li>`
+
+        });
+
+        document.querySelector("#list").innerHTML=list
+    }
+
+
+
+// <!-- post -->
+
+function addCourse() {
+    const courseName = document.getElementById("courseInput").value;
+
+    fetch("http://localhost:3000/addcourse", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ course: courseName })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert("Course Added!");
+        console.log(data);
+    });
+}
+
+
+// put
+
+function updateCourse() {
+    const id = document.getElementById("updateId").value;
+    const newName = document.getElementById("updateName").value;
+
+    fetch(`http://localhost:3000/updatecourse/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ course: newName })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert("Course Updated!");
+        console.log(data);
+    });
+}
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
